@@ -7,47 +7,30 @@
 
 
 
-class Data:
-    def __init__(self, day_month_year):
-        # self.day = day
-        # self.month = month
-        # self.year = year
-        self.day_month_year = str(day_month_year)
+class Date:
+    day: int
+    month: int
+    year: int
+
+    def __init__(self, date_string: str):
+        umbers = Date.extract_nmbers(date_string)
+        self.validate_numbers(numbers)
+
+        self.day, self.month, self.year = numbers
 
     @classmethod
-    def extract(cls, day_month_year):
-        my_date = []
+    def extract_numbers(cls, date_string: str) -> list:
+        return [int(x) for x in date_string.split('-')]
 
-        for i in day_month_year.split():
-            if i != '-': my_date.append(i)
+    @straticmethod
+    def vlidate_numbers(numbers: list):
+        d, n, y = numbers
 
-        return int(my_date[0]), int(my_date[1]), int(my_date[2])
+        assert 1 <= d <= 31, "Неверный формат числа"
+        assert 1 <= m <= 12, "Неверный формат месяца"
+        assert 1990 <= y <= 2100, "Неверный формат года"
 
-    @staticmethod
-    def valid(day, month, year):
-
-        if 1 <= day <= 31:
-            if 1 <= month <= 12:
-                if 2019 >= year >= 0:
-                    return f'All right'
-                else:
-                    return f'Неправильный год'
-            else:
-                return f'Неправильный месяц'
-        else:
-            return f'Неправильный день'
-
-    def __str__(self):
-        return f'Текущая дата {Data.extract(self.day_month_year)}'
-
-
-today = Data('11 - 1 - 2001')
-print(today)
-print(Data.valid(11, 11, 2022))
-print(today.valid(11, 13, 2011))
-print(Data.extract('11 - 11 - 2011'))
-print(today.extract('11 - 11 - 2020'))
-print(Data.valid(1, 11, 2000))
+my_date = Date('13-11-2000')
 
 
 
