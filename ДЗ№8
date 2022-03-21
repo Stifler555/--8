@@ -40,23 +40,30 @@ my_date = Date('13-11-2000')
 не завершиться с ошибкой.
 
 
-class DivisionByNull:
-    def __init__(self, divider, denominator):
-        self.divider = divider
-        self.denominator = denominator
+class CustomZeroDivisionError(Exception):
+    pass
 
-    @staticmethod
-    def divide_by_null(divider, denominator):
-        try:
-            return (divider / denominator)
-        except:
-            return (f"Деление на ноль недопустимо")
+def get_numerator() -> int:
+    return int(input("Введите числитель >>> "))
 
+def get_denominator() -> int:
+    value = int(input("Введите знаменатель >>>"))
 
-div = DivisionByNull(10, 100)
-print(DivisionByNull.divide_by_null(10, 0))
-print(DivisionByNull.divide_by_null(10, 0.1))
-print(div.divide_by_null(100, 0))
+    if value == 0:
+        raise CustomZeroDivisionError
+
+    return value
+
+while True:
+    try:
+        numerator = get_numerator()
+        denominator = get_denominator()
+
+        print(f"Результат = {numerator / denominator}")
+    except CustomZeroDivisionError:
+        print("Вы ввели 0 в каччестве знаменателя, так не пойдет")
+    except KeyboardInterrupt:
+        break
 
 
 
